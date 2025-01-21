@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <div class="gridSize">
+        <p>Choose size:</p>
+        <input type="number" id="width" name="width" required minlength="2" maxlength="4">
+        <p>x</p>
+        <input type="number" id="height" name="height" required minlength="2" maxlength="4">
+        <button id="submit">Draw grid</button>
+    </div>
+    <div class="container">
+        <div class="drawingBoard">
+
+        </div>
+    </div>
+
+    <div class="pens">
+        <button id="black">Black</button>
+        <button id="red">Red</button>
+        <button id="green">Green</button>
+        <button id="eraser">Eraser</button>
+        <button id="clear">Clear</button>
+    </div>
+    
+    <script src="script.js"></script>
+</body>
+</html>
