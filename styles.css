@@ -1,12 +1,5 @@
-@font-face {
-    font-family: 'Pixelify';
-    src: url("https://fonts.google.com/specimen/Pixelify+Sans");
-}
-
-
-
 body, html {
-    font-family: 'Pixelify', Arial, Helvetica, sans-serif;
+    font-family: 'Pixelify Sans', Arial, Helvetica, sans-serif;
     background-color: #d6d6e7;
 }
 
@@ -15,6 +8,7 @@ body, html {
     display: flex;
     gap: 30px;
     justify-content: center;
+    font-size: large;
 }
 
 input {
@@ -22,6 +16,46 @@ input {
     height: 30px;
     border-radius: 5px;
     box-shadow: #d6d6e7 0 -3px 0px inset ;
+}
+
+#submit {
+    padding: 5px 20px;
+    font-family: 'Pixelify Sans', Arial, Helvetica, sans-serif;
+    font-size: 12px;
+    background-color: #333;
+    color: #fff;
+    text-shadow: 0 2px 0 rgb(0 0 0 / 25%);
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+    border: 0;
+    z-index: 1;
+    user-select: none;
+    cursor: pointer;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    white-space: unset;
+    padding: .8rem 1.5rem;
+    text-decoration: none;
+    box-shadow: 
+    0 -4px rgb(0 0 0 / 50%) inset, 
+    0 4px rgb(255 255 255 / 20%) inset, 
+    -4px 0 rgb(255 255 255 / 20%) inset, 
+    4px 0 rgb(0 0 0 / 50%) inset;
+    transition: 
+    transform 0.15s;
+}
+
+#submit:active {
+    transform: translateY(2px)
+}
+
+.notify {
+    display: flex;
+    justify-content: center;
+    margin: 0;
+    font-size: 12px;
 }
 
 .container {
@@ -32,14 +66,15 @@ input {
 
 .drawingBoard {
     display: flex;
-    height: 500px;
     width: 500px;
+    height: 500px;
+    display: grid;
     background-color: #191820;
-    border-radius: 20px;
     box-sizing: border-box;
     box-shadow:
-    rgba(45, 35, 66, 0.2) 0 2px 4px,
-    rgba(45, 35, 66, 0.15) 0 7px 13px -3px;
+    rgba(45, 35, 66, 0.2) 0 4px 8px,
+    rgba(45, 35, 66, 0.15) 0 7px 13px -6px;
+    border: 10px ridge rgba(171, 167, 173, 0.6);
 
 }
 
@@ -75,6 +110,7 @@ input {
     transform 0.15s;
     will-change: box-shadow, transform;
     touch-action: manipulation;
+    cursor: pointer;
 
 }
 
