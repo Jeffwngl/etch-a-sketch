@@ -17,18 +17,21 @@
         <input type="number" id="height" name="height" required minlength="2" maxlength="4">
         <button id="submit">Draw grid</button>
     </div>
-    <p class="notify">Please choose a square canvas size.</p>
+    <p class="notify">Max size 500px.</p>
     <div class="container">
         <h2>Etch-A-Sketch</h2>
         <div width="500" height="500" class="drawingBoard"></div>
     </div>
 
     <div class="pens">
-        <button id="black">Black</button>
-        <button id="red">Red</button>
-        <button id="green">Green</button>
+        <input type="color" id="colorDisplay" />
+        <button id="sizeDown">Size Down</button>
+        <button id="sizeUp">Size Up</button>
         <button id="eraser">Eraser</button>
         <button id="clear">Clear</button>
+    </div>
+    <div class="share">
+        <button id="export">Export Drawing</button>
     </div>
     
     <script src="script.js"></script>
