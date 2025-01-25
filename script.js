@@ -12,11 +12,15 @@ const notify = document.querySelector(".notify");
 const colorPicker = document.getElementById("colorDisplay");
 const erase = document.getElementById("eraser");
 const clear = document.getElementById("clear");
+const sizeUp = document.getElementById("sizeUp");
+const sizeDown = document.getElementById("sizeDown");
 let color = 'black';
 let area = 0;
 let mouseDown = false;
 let c_width = 0;
 let c_height = 0;
+let brushSize = 1;
+let events;
 
 // populate canvas
 function populateContainer(canvas, width, height, notify, area) {
@@ -63,24 +67,83 @@ function populateContainer(canvas, width, height, notify, area) {
     // populates grid
     for (i = 0; i < area; i++) {
         let square = document.createElement('div');
+
+        // add event listener for when painting
         square.addEventListener('mouseover', (event) => {
+
             if (mouseDown) {
-                square.style.backgroundColor = color;
+                if (brushSize == 1) {
+                    square.style.backgroundColor = color;
+                }
+                else {
+                    // draws surrounding pixels for larger brush sizes
+                    let allPixels = Array.from(canvas.children);
+                    let toPaint = allPixels.indexOf(event.target);
+                    console.log(`index: ${toPaint}`);
+                    
+                    let lowerLimit = -Math.floor(brushSize / 2);
+                    let upperLimit = Math.floor(brushSize / 2);
+
+                    // populates space around target square
+                    for (let r = lowerLimit; r <= upperLimit; r++) {
+                        for (let c = lowerLimit; c <= upperLimit; c++) {
+                            // bottom right toPaint index is width^2
+                            // top left corner is index 0, index = col * row
+                            let rowIndex = Math.floor(toPaint / c_width) + r;
+                            let colIndex = (toPaint % c_width) + c;
+                            // debugging
+                            
+                            // console.log(`row: ${rowIndex}`);
+                            // console.log(`col: ${colIndex}`);
+
+                            if (rowIndex >= 0 && rowIndex < c_width && colIndex >= 0 && colIndex < c_width) {
+                                let neighourIndex = rowIndex * c_width + colIndex;
+                                allPixels[neighourIndex].style.backgroundColor = color;
+                            }
+                        }
+                    }
+                }
             }
         });
         // stops text dragging, prevent default behaviour
         square.addEventListener('dragstart', (event) => {
             event.preventDefault();
         })
+        // inserts squares
         square.style.backgroundColor = 'white';
         canvas.insertAdjacentElement('beforeend', square);
     }
 }
 
+// function undo() {
+
+// }
+
+// function paintArea() {
+
+// }
+
+// changes brush size
+sizeUp.addEventListener('click', () => {
+    brushSize += 2;
+    if (brushSize > 5) {
+        brushSize = 5;
+    }
+    console.log(`changesize: ${brushSize}`);
+})
+
+sizeDown.addEventListener('click', () => {
+    brushSize -= 2;
+    if (brushSize < 1) {
+        brushSize = 1;
+    }
+    console.log(`changesize: ${brushSize}`);
+})
+
 // changes event listener of square to change color
 colorPicker.addEventListener('input', (event) => {
     color = event.target.value;
-});
+})
 // turns to eraser
 erase.addEventListener('click', () => {
     color = 'white';
@@ -91,5 +154,9 @@ clear.addEventListener('click', () => {
     populateContainer(canvas, c_width, c_height, notify, c_width * c_height);
 })
 
-
 drawCanvas.addEventListener('click', () => populateContainer(canvas, width.value, height.value, notify, area));
+// add png style background -> change it so eraser isn't white 
+// add undo function
+// add size function
+
+// do trees
