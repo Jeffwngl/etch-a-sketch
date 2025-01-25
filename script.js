@@ -6,21 +6,29 @@ document.addEventListener("DOMContentLoaded", (event) => {
   // was going to make different canvas sizes, hence width and height variables.
 const canvas = document.querySelector(".drawingBoard");
 const drawCanvas = document.getElementById("submit");
+
 const width = document.getElementById("width");
 const height = document.getElementById("height");
+
 const notify = document.querySelector(".notify");
 const colorPicker = document.getElementById("colorDisplay");
+
 const erase = document.getElementById("eraser");
 const clear = document.getElementById("clear");
+
 const sizeUp = document.getElementById("sizeUp");
 const sizeDown = document.getElementById("sizeDown");
+
+const penCursor = 'assets/pixil-frame-0.png';
+const eraserCursor = 'assets/pixil-frame-1.png';
+
 let color = 'black';
 let area = 0;
 let mouseDown = false;
 let c_width = 0;
 let c_height = 0;
 let brushSize = 1;
-let events;
+var eventStack = [];
 
 // populate canvas
 function populateContainer(canvas, width, height, notify, area) {
@@ -52,6 +60,8 @@ function populateContainer(canvas, width, height, notify, area) {
     canvas.addEventListener('mousedown', (event) => {
         mouseDown = true;
         event.target.style.backgroundColor = color;
+    
+        // eventStack.push({event.target, color});
         console.log('black');
     }) 
     canvas.addEventListener('mouseup', () => {
@@ -62,7 +72,6 @@ function populateContainer(canvas, width, height, notify, area) {
         mouseDown = false;
         console.log('leave');
     })
-
 
     // populates grid
     for (i = 0; i < area; i++) {
@@ -79,7 +88,6 @@ function populateContainer(canvas, width, height, notify, area) {
                     // draws surrounding pixels for larger brush sizes
                     let allPixels = Array.from(canvas.children);
                     let toPaint = allPixels.indexOf(event.target);
-                    console.log(`index: ${toPaint}`);
                     
                     let lowerLimit = -Math.floor(brushSize / 2);
                     let upperLimit = Math.floor(brushSize / 2);
@@ -91,8 +99,9 @@ function populateContainer(canvas, width, height, notify, area) {
                             // top left corner is index 0, index = col * row
                             let rowIndex = Math.floor(toPaint / c_width) + r;
                             let colIndex = (toPaint % c_width) + c;
+                            // takes the target square and paints the indexes around it, rowIndex/colIndex changed to a 3x3 or 5x5 block which is painted
                             // debugging
-                            
+
                             // console.log(`row: ${rowIndex}`);
                             // console.log(`col: ${colIndex}`);
 
@@ -115,14 +124,6 @@ function populateContainer(canvas, width, height, notify, area) {
     }
 }
 
-// function undo() {
-
-// }
-
-// function paintArea() {
-
-// }
-
 // changes brush size
 sizeUp.addEventListener('click', () => {
     brushSize += 2;
@@ -143,10 +144,12 @@ sizeDown.addEventListener('click', () => {
 // changes event listener of square to change color
 colorPicker.addEventListener('input', (event) => {
     color = event.target.value;
+    canvas.style.cursor = `url('${penCursor}') 0 20, auto`;
 })
 // turns to eraser
 erase.addEventListener('click', () => {
     color = 'white';
+    canvas.style.cursor = `url('${eraserCursor}') 10 17, auto`;
 })
 
 // clears drawing board
@@ -155,8 +158,5 @@ clear.addEventListener('click', () => {
 })
 
 drawCanvas.addEventListener('click', () => populateContainer(canvas, width.value, height.value, notify, area));
-// add png style background -> change it so eraser isn't white 
 // add undo function
-// add size function
-
-// do trees
+// add export
