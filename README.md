@@ -10,4 +10,7 @@ a sketch on a scalable canvas with a variety of different colors.</p>
 2. Press draw grid
 3. Start drawing! :smile:
 
+You can use the website here! 
+https://jeffwngl.github.io/etch-a-sketch/
+
 <p>As of the current version export doesn't work.</p>
